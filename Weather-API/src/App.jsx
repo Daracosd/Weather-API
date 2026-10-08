@@ -5,22 +5,22 @@ import { Sun, Cloud, CloudRain, CloudLightning, Snowflake, Search, ArrowRight, M
 
 
 const CONDITION_IMAGES = {
-  "Clear": <Sun size={48} color="#fcd34d" />,
-  "Clouds": <Cloud size={48} color="#9ca3af" />,
-  "Rain": <CloudRain size={48} color="#3b82f6" />,
-  "Drizzle": <CloudRain size={48} color="#3b82f6" />,
-  "Thunderstorm": <CloudLightning size={48} color="#ef4444" />,
+  "Clear": "/public/sun.jpg",
+  "Clouds": "/public/cloudy.jpg",
+  "Rain": "/public/rain.jpg",
+  "Drizzle":"/public/rain.jpg",
+  "Thunderstorm":"/public/rain.jpg",
 }
 
-const DEFAULT_IMAGE = "/public/sun.jpg";
+const DEFAULT_IMAGE = "/public/cloudy.jpg";
 
 const CONDITION_ICONS = {
-  Clear: sun,
-  Clouds: cloud,
-  Rain: cloudRain,
-  Drizzle: cloudRain,
-  Thunderstorm: cloudLightning,
-  Snow: snowflake,
+  Clear: Sun,
+  Clouds: Cloud,
+  Rain: CloudRain,
+  Drizzle: CloudRain,
+  Thunderstorm: CloudLightning,
+  Snow: Snowflake,
 };
 
 export default function App() {
@@ -54,7 +54,7 @@ export default function App() {
 
   const main=weatherData?.weather[0]?.main;
   const photo=CONDITION_IMAGES[main] || DEFAULT_IMAGE;
-  const ConditionIcon=CONDITION_ICONS[main] || sun;
+  const ConditionIcon=CONDITION_ICONS[main] || Sun;
 
   return (
     <div className="page">

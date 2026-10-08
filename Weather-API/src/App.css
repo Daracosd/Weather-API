@@ -1,59 +1,235 @@
-.app{
-  max-width: 480px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-family: system-ui, sans-serif;
+:root{
+  --bg: #edf2f5;
+  --surface: #f9fbfc;
+  --link: #23373f;
+  --muted: #6f848d;
+  --line: #dfe6ea;
+  --accent: #476b7d;
+  --accent-dark: #3a5a69;
+
 }
 
-.form{
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--link);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.page{
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 48px 24px;
+
+}
+
+.top-bar{
   display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
 }
 
-.weather-info{
-  text-align: center;
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.weather-info h2{
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.brand-icon{
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #dde7ec;
+  color: var(--accent);
 }
 
-.weather-info p{
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+.brand-name{
+  font-weight: 600;
 }
 
-.weather-info img{
-  width: 100px;
-  height: 100px;
+.topbar-note{
+  font-size: 14px;
+  color: var(--muted);
 }
 
-.weather-info .temp{
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.search-label{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: var(--muted);
+
 }
 
-.weather-info .description{
-  font-size: 1.2rem;
-  text-transform: capitalize;
+.search-row{
+  display: flex;
+  gap: 12px;
+
 }
 
-.weather-info .details{
-  font-size: 1rem;
-  margin-top: 1rem;
+.input-wrap{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--muted);
 }
+
+.input-wrap:focus-within{
+  border-color: var(--accent);
+}
+
+.input-wrap input{
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font:100% inherit;
+  font-size: 14px;
+  color: var(--link);
+}
+
+.search button{
+  display: inline=block;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search button:hover{
+  background: var(--accent-dark);
+}
+
+.search button:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status{
+  margin-top: 20px;
+  color: var(--muted);
+}
+
 .error{
-  color: red;
-  text-align: center;
-  margin-top: 1rem;
+  color: #b3402e;
 }
-.app .form input[type="text"]{
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 0.5rem;
+
+.card{
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  margin-top: 28px;
+  min-height: 340px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px
+}
+
+.card-main{
+  display: flex;
+  flex-direction: column;
+  padding: 32px 30px;
+}
+
+.eyebrow{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.place{
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.temp{
+  display: flex;
+  align-items: flex-start;
+  margin: 28px 0 16px;
+  font-size: 96px;
+  font-weight: 200;
+  line-height: 1;
+}
+
+.unit{
+  margin: 8px 0 0 6px;
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.stats{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.stat + .stat{
+  padding-left: 24px;
+  border-left: 1px solid var(--line);
+}
+
+.stat-label{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stat-value{
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+}
+
+.card-photo{
+  background: #8aa0a8 center/cover no-repeat;
+}
+
+@media (max-width: 640px){
+  .search-row{
+    flex-direction: column;
+  }
+  .search button{
+    justify-content: center;
+  }
+  .card{
+    grid-template-columns: 1fr;
+  }
+  .card-photo{
+    order: 1px;
+    height: 180px;
+
+  }
+  .temp{
+    font-size: 72px;
+  }
 }
