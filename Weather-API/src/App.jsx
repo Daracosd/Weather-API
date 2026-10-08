@@ -3,6 +3,26 @@ import {fetchWeather} from './weatherApp.js';
 import './App.css';
 import { Sun, Cloud, CloudRain, CloudLightning, Snowflake, Search, ArrowRight, MapPin, Droplets, Wind } from "lucide-react";
 
+
+const CONDITION_IMAGES = {
+  "Clear": <Sun size={48} color="#fcd34d" />,
+  "Clouds": <Cloud size={48} color="#9ca3af" />,
+  "Rain": <CloudRain size={48} color="#3b82f6" />,
+  "Drizzle": <CloudRain size={48} color="#3b82f6" />,
+  "Thunderstorm": <CloudLightning size={48} color="#ef4444" />,
+}
+
+const DEFAULT_IMAGE = "/public/sun.jpg";
+
+const CONDITION_ICONS = {
+  Clear: sun,
+  Clouds: cloud,
+  Rain: cloudRain,
+  Drizzle: cloudRain,
+  Thunderstorm: cloudLightning,
+  Snow: snowflake,
+};
+
 export default function App() {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
@@ -11,12 +31,19 @@ export default function App() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const trimmedCity = city.trim();
+    if (!trimmedCity) {
+      setError("Please enter a city name.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setWeatherData(null);
     
     try {
-      const data = await fetchWeather(city);
+      const data = await fetchWeather(trimmedCity);
       setWeatherData(data);
     } catch (err) {
       setError(err.message);
@@ -25,32 +52,75 @@ export default function App() {
     }
   }
 
+  const main=weatherData?.weather[0]?.main;
+  const photo=CONDITION_IMAGES[main] || DEFAULT_IMAGE;
+  const ConditionIcon=CONDITION_ICONS[main] || sun;
 
-return(
-  <main className="app">
-    <h1>Weather App</h1>
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter city name"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-      />
-      <button type="submit">Get Weather</button>
-    </form>
-    {loading && <p>Loading...</p>}
-    {error && <p>{error}</p>}
-    {weatherData && (
-      <div className="weather-card">
-        <h2>{weatherData.name}, {weatherData.sys.country}</h2>
+  return (
+    <div className="page">
+      <header className="topbar">
+        <div className="brand">
+          <span className="brand-icon"><CloudRain size={18} /></span>
+          <span className="brand-name">Weather App</span>
+        </div>
+        <span className="topbar-note">Current Weather</span>
 
-        <img src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].description} />
-        <p className="temp">{weatherData.main.temp} °F</p>
-        <p className="description">{weatherData.weather[0].description}</p>
-        <p className="details">Humidity: {weatherData.main.humidity}%</p>
-        <p className="details">Wind Speed: {weatherData.wind.speed} mph</p>
-      </div>
-    )}
-  </main>
-)
+      </header>
+
+      <form className="search" onSubmit={handleSubmit}>
+        <label htmlfor="city">Search for a city</label>
+        <div className="search-row">
+          <div className="input-wrap">
+            <Search size={16} />
+            <input
+              id="city"
+              type="text"
+              placeholder="Enter city name"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading..." : <ArrowRight size={16} />}
+          </button>
+        </div>
+      </form>
+      
+      {error && <div className="error">{error}</div>}
+      {loading && <div className="loading">Loading...</div>}
+
+      {weatherData && (
+        <section className="card">
+          <div clasName="card-main">
+            <p className="eyebrow"><MapPin size={12} /> Current weather</p>
+            <h2 className="place">
+              {weatherData.name}, {weatherData.sys.country}
+            </h2>
+
+            <div className="temp">
+              {Math.round(weatherData.main.temp)}
+              <span className="unit">°F</span>
+            </div>
+
+            <p className="condition">
+              <ConditionIcon  size={18} /> {weatherData.weather[0].description}
+            </p>
+
+            <div className="stats">
+              <div className="stat"> 
+                <span className="stat-label"><Droplets size={14} /> Humidity</span>
+                <span className="stat-value">{weatherData.main.humidity}%</span>
+              </div>
+              <div className="stat">
+                <span className="stat-label"><Wind size={14} /> Wind</span>
+                <span className="stat-value">{Math.round(weatherData.wind.speed)} mph</span>
+              </div>
+            </div>
+          </div>
+          <div className="card-photo" style={{ backgroundImage: `url(${photo})` }}/>
+        
+      </section>
+      )}
+    </div>
+  );  
 }
