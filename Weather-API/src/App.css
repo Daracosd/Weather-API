@@ -1,0 +1,59 @@
+.app{
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+.form{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.weather-info{
+  text-align: center;
+}
+
+.weather-info h2{
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.weather-info p{
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.weather-info img{
+  width: 100px;
+  height: 100px;
+}
+
+.weather-info .temp{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.weather-info .description{
+  font-size: 1.2rem;
+  text-transform: capitalize;
+}
+
+.weather-info .details{
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+.error{
+  color: red;
+  text-align: center;
+  margin-top: 1rem;
+}
+.app .form input[type="text"]{
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
